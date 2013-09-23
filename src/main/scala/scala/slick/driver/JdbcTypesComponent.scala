@@ -96,7 +96,7 @@ trait JdbcTypesComponent extends RelationalTypesComponent { driver: JdbcDriver =
       def nextValue(r: PositionedResult) = r.nextBytes
       def updateValue(v: Array[Byte], r: PositionedResult) = r.updateBytes(v)
       override def valueToSQLLiteral(value: Array[Byte]) =
-        throw new SlickException("Array[Byte] does not have a literal representation")
+        "0x" + value.map("%02x".format(_)).mkString
     }
 
     class ClobJdbcType extends DriverJdbcType[Clob] {
